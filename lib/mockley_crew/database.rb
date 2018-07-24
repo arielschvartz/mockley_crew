@@ -15,7 +15,7 @@ module MockleyCrew
           username: "crew_master",
           password: "crew_man"
         }, {
-          thread_name: args["thread_name"] || "mockley_crew"
+          thread_name: args["thread_name"] || "mockley_crew_default"
         })
       end
 
@@ -59,8 +59,22 @@ module MockleyCrew
       end
 
       def create_default_database
-        MockleyCrew::Database.connect("database" => MockleyCrew.configuration.default_database_path)
-        MockleyCrew::Database.migrate
+        unless File.exists?(MockleyCrew.configuration.default_database_path)
+          MockleyCrew::Database.connect("database" => MockleyCrew.configuration.default_database_path)
+          MockleyCrew::Database.migrate
+        end
+      end
+
+      def delete_default_databse
+        if File.exists?(MockleyCrew.configuration.default_database_path)
+          File.delete(MockleyCrew.configuration.default_database_path) 
+          terminate_thread "mockley_crew_default"
+        end
+      end
+
+      def reset_default_database
+        delete_default_databse
+        create_default_database
       end
 
       def remove_file_by_filename filename
@@ -88,7 +102,9 @@ module MockleyCrew
       end
 
       def create
-        self.new.create
+        db = self.new
+        db.save
+        db
       end
     end
 

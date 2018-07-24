@@ -1,5 +1,5 @@
 module MockleyCrew
   class ApplicationController < ActionController::API
-    # protect_from_forgery with: :exception
+    include MockleyCrew::MockleyCrewHandled
   end
 end

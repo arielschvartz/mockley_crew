@@ -34,6 +34,10 @@ module DatabasesHelper
 
   def clear_all_databases
     FileUtils.rm_rf("#{mockley_crew_databases_path}/.", secure: true)
-    File.delete(mockley_crew_default_database_path) if File.exists?(mockley_crew_default_database_path)
+    if File.exists?(mockley_crew_default_database_path)
+      File.delete(mockley_crew_default_database_path) 
+    end
+
+    Thread.list.select { |t| t["thread_name"] != nil }.each { |t| t.kill }
   end
 end

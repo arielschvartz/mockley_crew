@@ -133,12 +133,52 @@ RSpec.describe MockleyCrew::Database do
       }.by(1)
     end
 
-    it "should change the thread from mockley_crew count by 1" do
+    it "should change the thread from mockley_crew_default count by 1" do
       expect {
         MockleyCrew::Database.create_default_database
       }.to change {
-        Thread.list.select { |x| x["thread_name"] == "mockley_crew" }.length
+        sleep 0.01
+        Thread.list.select { |x| x["thread_name"] == "mockley_crew_default" }.length
       }.by(1)
+    end
+
+    it "should not change any files when calling the delete default database with no database created" do
+      expect {
+        MockleyCrew::Database.delete_default_databse
+      }.not_to change {
+        Dir[mockley_crew_default_database_path].length
+      }
+    end
+
+    it "should not change any threads when calling the delete default database with no database created" do
+      expect {
+        MockleyCrew::Database.delete_default_databse
+      }.not_to change {
+        Thread.list.length
+      }
+    end
+
+    describe "when the default database already exists" do
+      before(:each) do
+        MockleyCrew::Database.create_default_database
+      end
+
+      it "should to remove 1 file when calling the delete default database" do
+        expect {
+          MockleyCrew::Database.delete_default_databse
+        }.to change {
+          Dir[mockley_crew_default_database_path].length
+        }.by(-1)
+      end
+
+      it "should to remove 1 thread when calling the delete default database" do
+        expect {
+          MockleyCrew::Database.delete_default_databse
+        }.to change {
+          sleep 0.01
+          Thread.list.length
+        }.by(-1)
+      end
     end
   end
 
@@ -157,6 +197,40 @@ RSpec.describe MockleyCrew::Database do
           MockleyCrew::Database.new.save
         }.to change {
           Dir["#{mockley_crew_databases_path}/*.db"].length
+        }.by(1)
+      end
+
+      it "should create a new thread" do
+        expect {
+          MockleyCrew::Database.new.save
+        }.to change {
+          sleep 0.01
+          Thread.list.length
+        }.by(1)
+      end
+
+      it "should create the default database" do
+        expect {
+          MockleyCrew::Database.create
+        }.to change {
+          Dir[mockley_crew_default_database_path].length
+        }.by(1)
+      end
+
+      it "should create a new database" do
+        expect {
+          MockleyCrew::Database.create
+        }.to change {
+          Dir["#{mockley_crew_databases_path}/*.db"].length
+        }.by(1)
+      end
+
+      it "should create a new thread" do
+        expect {
+          MockleyCrew::Database.create
+        }.to change {
+          sleep 0.01
+          Thread.list.length
         }.by(1)
       end
     end
