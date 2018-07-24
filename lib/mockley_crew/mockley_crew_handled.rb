@@ -26,7 +26,7 @@ module MockleyCrew::MockleyCrewHandled
 
     def set_database
       @database_name = request.headers[MockleyCrew.configuration.crew_header]
-      @database = MockleyCrew::Database.find_by_name(@database_name)
+      @database = MockleyCrew::Database.find_by_filename(@database_name)
     end
 
     def set_response_header

@@ -3,17 +3,17 @@ require 'rails_helper'
 RSpec.describe MockleyCrew::Database do
   subject { MockleyCrew::Database }
 
-  describe "testing the remove_file_by_filename" do
+  describe "testing the remove_file_by_full_filename" do
     before(:each) do
       create_dummy_databases 1
       @filename = MockleyCrew.configuration.database_files.first
     end
 
-    it "should remove the database when the remove_file_by_filename method is called" do
+    it "should remove the database when the remove_file_by_full_filename method is called" do
       expect {
-        subject.remove_file_by_filename(@filename)
+        subject.remove_file_by_full_filename(@filename)
       }.to change {
-        Dir["#{mockley_crew_databases_path}/*.db"].length
+        Dir["#{mockley_crew_databases_path}*.db"].length
       }.by(-1)
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe MockleyCrew::Database do
         expect {
           MockleyCrew::Database.clean_database_files
         }.to change {
-          Dir["#{mockley_crew_databases_path}/*.db"].length
+          Dir["#{mockley_crew_databases_path}*.db"].length
         }.by(-4)
       end
 
@@ -94,7 +94,7 @@ RSpec.describe MockleyCrew::Database do
         expect {
           MockleyCrew::Database.clean_database_files(120)
         }.to change {
-          Dir["#{mockley_crew_databases_path}/*.db"].length
+          Dir["#{mockley_crew_databases_path}*.db"].length
         }.by(-2)
       end
 
@@ -102,7 +102,7 @@ RSpec.describe MockleyCrew::Database do
         expect {
           MockleyCrew::Database.clean_database_files(121)
         }.not_to change {
-          Dir["#{mockley_crew_databases_path}/*.db"].length
+          Dir["#{mockley_crew_databases_path}*.db"].length
         }
       end
 
@@ -110,7 +110,7 @@ RSpec.describe MockleyCrew::Database do
         expect {
           MockleyCrew::Database.clean_database_files(0)
         }.to change {
-          Dir["#{mockley_crew_databases_path}/*.db"].length
+          Dir["#{mockley_crew_databases_path}*.db"].length
         }.by(-6)
       end
     end
@@ -129,6 +129,7 @@ RSpec.describe MockleyCrew::Database do
       expect {
         MockleyCrew::Database.create_default_database
       }.to change {
+        sleep 0.01
         Thread.list.length
       }.by(1)
     end
@@ -154,6 +155,7 @@ RSpec.describe MockleyCrew::Database do
       expect {
         MockleyCrew::Database.delete_default_databse
       }.not_to change {
+        sleep 0.01
         Thread.list.length
       }
     end
@@ -196,7 +198,7 @@ RSpec.describe MockleyCrew::Database do
         expect {
           MockleyCrew::Database.new.save
         }.to change {
-          Dir["#{mockley_crew_databases_path}/*.db"].length
+          Dir["#{mockley_crew_databases_path}*.db"].length
         }.by(1)
       end
 
@@ -221,7 +223,7 @@ RSpec.describe MockleyCrew::Database do
         expect {
           MockleyCrew::Database.create
         }.to change {
-          Dir["#{mockley_crew_databases_path}/*.db"].length
+          Dir["#{mockley_crew_databases_path}*.db"].length
         }.by(1)
       end
 
@@ -254,7 +256,7 @@ RSpec.describe MockleyCrew::Database do
         expect {
           MockleyCrew::Database.new.save
         }.to change {
-          Dir["#{mockley_crew_databases_path}/*.db"].length
+          Dir["#{mockley_crew_databases_path}*.db"].length
         }.by(1)
       end
 
@@ -276,6 +278,7 @@ RSpec.describe MockleyCrew::Database do
       expect {
         @database.connect
       }.to change {
+        sleep 0.01
         Thread.list.select { |t| t["thread_name"] == @database.filename }.length
       }.by(1)
     end
@@ -328,6 +331,7 @@ RSpec.describe MockleyCrew::Database do
       expect {
         @database.disconnect
       }.not_to change {
+        sleep 0.01
         Thread.list.length
       }
     end
@@ -338,6 +342,7 @@ RSpec.describe MockleyCrew::Database do
       expect {
         MockleyCrew::Database.restore_default_connection
       }.not_to change {
+        sleep 0.01
         Thread.list.length
       }
     end

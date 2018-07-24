@@ -55,7 +55,8 @@ module MockleyCrew
       end
 
       def terminate_thread filename
-        Thread.list.select { |t| t["thread_name"] == filename }.first.kill
+        thread = Thread.list.select { |t| t["thread_name"] == filename }.first
+        thread.kill if thread
       end
 
       def create_default_database
@@ -77,15 +78,19 @@ module MockleyCrew
         create_default_database
       end
 
-      def remove_file_by_filename filename
+      def remove_file_by_full_filename filename
         File.delete(filename)
+      end
+
+      def remove_file_by_filename filename
+        self.remove_file_by_full_filename(MockleyCrew.configuration.database_files_path + filename)
       end
 
       def clean_database_files seconds = 60
         MockleyCrew.configuration.database_files.each do |filename|
           filename_parts = File.basename(filename, ".db").split("_");
           if Time.zone.now.to_i - filename_parts.first.to_i >= seconds or filename_parts.length < 2
-            self.remove_file_by_filename(filename)
+            self.remove_file_by_full_filename(filename)
           end
         end
       end
@@ -98,6 +103,15 @@ module MockleyCrew
         loop do
           code = SecureRandom.hex(10)
           break code unless MockleyCrew.configuration.database_codes.include?(code)
+        end
+      end
+
+      def find_by_filename filename
+        db = self.new(filename: filename)
+        if db.exists?
+          return db
+        else
+          return nil
         end
       end
 
@@ -118,6 +132,10 @@ module MockleyCrew
       unless self.filename.present?
         self.filename = self.class.next_name
       end
+    end
+
+    def exists?
+      File.exists?("#{MockleyCrew.configuration.database_files_path}#{self.filename}")
     end
 
     def get_name
@@ -158,6 +176,7 @@ module MockleyCrew
 
     def destroy
       self.disconnect
+      self.class.remove_file_by_filename(self.filename)
       self.class.terminate_thread(self.filename)
     end
   end
