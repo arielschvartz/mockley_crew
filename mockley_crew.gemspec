@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = MockleyCrew::VERSION
   s.authors     = ["Ariel Schvartz"]
   s.email       = ["ari.shh@gmail.com"]
-  s.homepage    = "https://github.com/arielschvartz"
+  s.homepage    = "https://github.com/arielschvartz/mockley_crew"
   s.summary     = "Rock your API integration tests by mocking data into multiple SQLite3 instances"
   s.description = "With Mockley Crew, you can create fake databases to use from your API consumer. This way, you can isolate the consumer tests by having multiple data scenarios built on your API."
   s.license     = "MIT"
