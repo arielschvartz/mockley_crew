@@ -1,10 +1,11 @@
 module MockleyCrew
   class Configuration
-    attr_accessor :crew_folder, :factories, :crew_header
+    attr_accessor :crew_folder, :factories, :crew_header, :heroku
 
     def initialize args = {}
       @crew_header = args["crew_header"] || "crew-man-badge"
       @crew_folder = args["crew_folder"] || "#{Rails.root}/db/crew"
+      @heroku = args["heroku"] || false
     end
 
     def default_database_path
@@ -27,6 +28,10 @@ module MockleyCrew
 
     def registered_factory? factory_name
       FactoryBot.factories.registered?(factory_name)
+    end
+
+    def heroku?
+      @heroku == true
     end
   end
 end

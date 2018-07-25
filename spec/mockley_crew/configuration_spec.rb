@@ -5,6 +5,7 @@ RSpec.describe MockleyCrew::Configuration do
     it "returns the correct configuration values" do
       expect(MockleyCrew.configuration.crew_header).to eq("crew-man-badge")
       expect(MockleyCrew.configuration.crew_folder).to eq("#{Rails.root}/db/crew")
+      expect(MockleyCrew.configuration.heroku).to eq(false)
     end
   end
 
@@ -13,6 +14,7 @@ RSpec.describe MockleyCrew::Configuration do
       MockleyCrew.configure do |config|
         config.crew_header = "test_header"
         config.crew_folder = "test_folder"
+        config.heroku = true
       end
     end
 
@@ -23,12 +25,14 @@ RSpec.describe MockleyCrew::Configuration do
     it "returns the correct configuration values" do
       expect(MockleyCrew.configuration.crew_header).to eq("test_header")
       expect(MockleyCrew.configuration.crew_folder).to eq("test_folder")
+      expect(MockleyCrew.configuration.heroku).to eq(true)
     end
 
     it "resets the variables on reset" do
       MockleyCrew.reset_configuration
       expect(MockleyCrew.configuration.crew_header).to eq("crew-man-badge")
       expect(MockleyCrew.configuration.crew_folder).to eq("#{Rails.root}/db/crew")
+      expect(MockleyCrew.configuration.heroku).to eq(false)
     end
   end
 
@@ -68,6 +72,22 @@ RSpec.describe MockleyCrew::Configuration do
     it "should be returned in the factories method" do
       expect(MockleyCrew.configuration.registered_factory?(:test)).to be(true)
       expect(MockleyCrew.configuration.registered_factory?(:test1)).to be(false)
+    end
+  end
+
+  describe "configure heroku" do
+    before(:each) do
+      MockleyCrew.sqlite3_loaded = false
+    end
+    
+    it "should install sqlite3" do
+      expect {
+        MockleyCrew.configure do |config|
+          config.heroku = true
+        end
+      }.to change {
+        MockleyCrew.sqlite3_loaded
+      }.to(true)
     end
   end
 end

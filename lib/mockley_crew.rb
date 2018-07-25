@@ -19,6 +19,7 @@ require "mockley_crew/mockley_crew_handled"
 module MockleyCrew
   class << self
     attr_writer :configuration
+    attr_accessor :sqlite3_loaded
   end
 
   def self.configuration
@@ -31,5 +32,21 @@ module MockleyCrew
 
   def self.configure
     yield(configuration)
+    if configuration.heroku?
+      set_sqlite3
+    end
+  end
+
+  def self.set_sqlite3
+    return if self.sqlite3_loaded == true
+
+    $: << "#{root}/vendor/gems/sqlite3/gems/sqlite3-1.3.13/lib/"
+    require 'sqlite3'
+    require 'active_record/connection_adapters/sqlite3_adapter'
+    self.sqlite3_loaded = true
+  end
+
+  def self.root
+    File.expand_path '../..', __FILE__
   end
 end
