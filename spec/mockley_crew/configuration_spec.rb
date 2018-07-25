@@ -59,4 +59,15 @@ RSpec.describe MockleyCrew::Configuration do
       expect(subject.database_codes).to match_array(["0", "1", "2", "3", "4"])
     end
   end
+
+  describe "registered_factory? method" do
+    before(:each) do
+      FactoryBot.factories.register(:test, "test")
+    end
+
+    it "should be returned in the factories method" do
+      expect(MockleyCrew.configuration.registered_factory?(:test)).to be(true)
+      expect(MockleyCrew.configuration.registered_factory?(:test1)).to be(false)
+    end
+  end
 end

@@ -1,4 +1,4 @@
-require "pry"
+require "factory_bot"
 
 require "mockley_crew/engine"
 require "mockley_crew/configuration"
@@ -8,8 +8,11 @@ require "mockley_crew/errors/database_not_found"
 require "mockley_crew/errors/database_with_no_name"
 require "mockley_crew/errors/invalid_data"
 require "mockley_crew/errors/invalid_factory"
+require "mockley_crew/errors/invalid_amount"
 
 require "mockley_crew/database"
+require "mockley_crew/factory_builder"
+require "mockley_crew/data"
 
 require "mockley_crew/mockley_crew_handled"
 

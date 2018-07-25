@@ -25,8 +25,8 @@ module MockleyCrew
       end
     end
 
-    # def factories
-    #   @factories ||= FactoryBot.factories.instance_variable_get("@items").map { |k, v| k.to_s }
-    # end
+    def registered_factory? factory_name
+      FactoryBot.factories.registered?(factory_name)
+    end
   end
 end

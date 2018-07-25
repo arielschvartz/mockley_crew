@@ -61,8 +61,8 @@ module MockleyCrew
 
       def create_default_database
         unless File.exists?(MockleyCrew.configuration.default_database_path)
-          MockleyCrew::Database.connect("database" => MockleyCrew.configuration.default_database_path)
-          MockleyCrew::Database.migrate
+          Database.connect("database" => MockleyCrew.configuration.default_database_path)
+          Database.migrate
         end
       end
 
@@ -135,7 +135,7 @@ module MockleyCrew
     end
 
     def exists?
-      File.exists?("#{MockleyCrew.configuration.database_files_path}#{self.filename}")
+      File.exists?(full_file_path)
     end
 
     def get_name
