@@ -5,11 +5,10 @@ RSpec.describe MockleyCrew::Data do
 
   it { expect(subject).to respond_to :builders }
   it { expect(subject).to respond_to :save }
-  it { expect(subject).to respond_to :as_json }
+    it { expect(subject).to respond_to :as_json }
 
   before(:each) do
-    FactoryBot.factories.register(:user, "test")
-    FactoryBot.factories.register(:user1, "test")
+    register_user_factories
   end
 
   after(:each) do

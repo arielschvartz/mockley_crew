@@ -63,7 +63,12 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include DatabasesHelper
+  config.include FactoryHelpers
   config.include ControllerHelper, type: :controller
+
+  config.before(:all) do
+    define_user_class
+  end
 
   config.before(:each) do
     clear_all_databases
