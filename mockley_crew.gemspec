@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "With Mockley Crew, you can create fake databases to use from your API consumer. This way, you can isolate the consumer tests by having multiple data scenarios built on your API."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.bindir        = "exe"
   # s.executables   = ["crew"]
