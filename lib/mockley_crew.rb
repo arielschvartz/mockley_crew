@@ -40,6 +40,7 @@ module MockleyCrew
   def self.set_sqlite3
     return if self.sqlite3_loaded == true
 
+    puts "\n\n\n#{Rails.root}/vendor/gems/sqlite3/\n\n\n"
     $: << "#{Rails.root}/vendor/gems/sqlite3/"
     require 'sqlite3'
     require 'active_record/connection_adapters/sqlite3_adapter'
