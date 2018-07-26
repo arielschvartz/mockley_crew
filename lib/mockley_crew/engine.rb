@@ -7,5 +7,23 @@ module MockleyCrew
       g.test_framework :rspec
       # g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
+
+    config.after_initialize do
+      if defined?(ActionController::Base)
+        ActionController::Base.include(MockleyCrew::MockleyCrewHandled)
+      end
+
+      if defined?(ActionController::API)
+        ActionController::API.include(MockleyCrew::MockleyCrewHandled)
+      end
+
+      if defined?(DeviseController)
+        DeviseController.include(MockleyCrew::MockleyCrewHandled)
+      end
+
+      if defined?(DeviseTokenAuth)
+        DeviseTokenAuth::ApplicationController.include(MockleyCrew::MockleyCrewHandled)
+      end
+    end
   end
 end
