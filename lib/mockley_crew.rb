@@ -44,7 +44,7 @@ module MockleyCrew
 
     # INSERT SQLITE3 ON THE GEMFILE
     contents = File.read("#{Rails.root}/Gemfile")
-    File.open("#{Rails.root}", "w+") do |file|
+    File.open("#{Rails.root}/Gemfile", "w+") do |file|
       file.write(contents + "\ngem 'sqlite3', '~> 1.3.13'")
     end
 
