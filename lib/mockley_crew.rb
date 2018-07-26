@@ -49,4 +49,8 @@ module MockleyCrew
   def self.root
     File.expand_path '../..', __FILE__
   end
+
+  def self.activated?
+    ActiveRecord::Base.connection.instance_variable_get(:@config)[:database].split("/")[0..-2].join("/") == configuration.database_files_path.gsub(/\/$/, "")
+  end
 end

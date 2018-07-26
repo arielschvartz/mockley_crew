@@ -90,4 +90,31 @@ RSpec.describe MockleyCrew::Configuration do
       }.to(true)
     end
   end
+
+  describe "activated" do
+    it "should be false as default" do
+      expect(MockleyCrew.activated?).to eq(false)
+    end
+
+    describe "when connected" do
+      before(:each) do
+        @database = MockleyCrew::Database.create
+        @database.connect
+      end
+
+      it "should be true" do
+        expect(MockleyCrew.activated?).to eq(true)
+      end
+
+      describe "when disconnected" do
+        before(:each) do
+          @database.disconnect
+        end
+
+        it "should be false" do
+          expect(MockleyCrew.activated?).to eq(false)
+        end
+      end
+    end
+  end
 end
