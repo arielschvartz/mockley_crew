@@ -1,5 +1,5 @@
 module MockleyCrew
-  class Database::DataController < ApplicationController
+  class Database::DataController < MockleyController
     rescue_from MockleyCrew::Errors::InvalidDataError do |exception|
       render json: { success: false, message: "Invalid body structure" }, status: 400
     end

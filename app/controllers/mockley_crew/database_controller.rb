@@ -1,5 +1,5 @@
 module MockleyCrew
-  class DatabaseController < ApplicationController
+  class DatabaseController < MockleyController
     skip_before_action :activate_database
     skip_after_action :restore_database
     skip_after_action :set_response_header

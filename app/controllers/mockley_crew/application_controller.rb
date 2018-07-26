@@ -1,4 +1,4 @@
 module MockleyCrew
-  class ApplicationController < ActionController::API
+  class MockleyController < ActionController::API
   end
 end
