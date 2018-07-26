@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mockley_crew (1.1.9)
+    mockley_crew (1.1.10)
       factory_bot_rails
       rails (~> 5.2.0)
 
