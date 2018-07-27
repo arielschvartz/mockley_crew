@@ -40,24 +40,7 @@ module MockleyCrew
   def self.set_sqlite3
     return if self.sqlite3_loaded == true
 
-    system("gem install -v 1.3.13 --install-dir #{Rails.root}/vendor/gems/sqlite3/ sqlite3 -- --with-sqlite3-dir=#{Rails.root}/vendor/sqlite3")
-
-    # INSERT SQLITE3 ON THE GEMFILE
-    contents = File.read("#{Rails.root}/Gemfile")
-    File.open("#{Rails.root}/Gemfile", "w+") do |file|
-      file.write(contents + "\ngem 'sqlite3', '~> 1.3.13'")
-    end
-
-    # INSERT SQLITE3 ON THE GEMFILE.lock
-    contents = File.read("#{Rails.root}/Gemfile.lock")
-    big_parts = contents.split("\nGEM")
-    small_parts = big_parts[1].split("specs:\n")
-    small_parts[1] = "    sqlite3 (1.3.13)\n" + small_parts[1]
-    big_parts[1] = small_parts.join("specs:\n")
-    contents = big_parts.join("\nGEM")
-    File.open("#{Rails.root}/Gemfile.lock", "w+") do |file|
-      file.write(contents)
-    end
+    system("gem install -v 1.3.13 --install-dir #{Rails.root}/vendor/gems/sqlite3/ sqlite3")
 
     $: << "#{Rails.root}/vendor/gems/sqlite3/gems/sqlite3-1.3.13/lib/"
     require 'sqlite3'
