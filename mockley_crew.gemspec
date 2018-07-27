@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 5.2.0"
   s.add_dependency "factory_bot_rails"
   
-  s.add_dependency "sqlite3", '1.3.13'
+  s.add_development_dependency "sqlite3", '1.3.13'
 
   s.add_development_dependency "pry-rails"
   s.add_development_dependency "timecop"

@@ -1,10 +1,9 @@
 PATH
   remote: .
   specs:
-    mockley_crew (1.3.2)
+    mockley_crew (1.3.3)
       factory_bot_rails
       rails (~> 5.2.0)
-      sqlite3 (= 1.3.13)
 
 GEM
   remote: https://rubygems.org/
@@ -155,6 +154,7 @@ DEPENDENCIES
   mockley_crew!
   pry-rails
   rspec-rails (~> 3.2)
+  sqlite3 (= 1.3.13)
   timecop
 
 BUNDLED WITH
