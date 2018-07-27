@@ -41,7 +41,7 @@ module MockleyCrew
 
     $: << "#{Rails.root}/vendor/gems/sqlite3/gems/sqlite3-1.3.13/lib/"
     require 'sqlite3'
-    hack_active_record0
+    hack_active_record
   end
 
   def hack_active_record
