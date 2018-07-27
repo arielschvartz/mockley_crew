@@ -2,7 +2,11 @@ module MockleyCrew
   class Sqlite3
     class << self
       def full_process
-        install_sqlite3
+        sqlite3 = `which sqlite3`
+        puts "\n\n\nSQLITE3: #{sqlite3}\n\n\n"
+        if sqlite3 == ""
+          install_sqlite3
+        end
         full_gem_install
       end
 
