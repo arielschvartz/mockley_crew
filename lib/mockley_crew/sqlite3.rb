@@ -40,7 +40,7 @@ module MockleyCrew
       def install_sqlite3
         prepare_folders
         download_sqlite3
-        install_sqlite3
+        make_install_sqlite3
       end
 
       def full_gem_install
