@@ -75,21 +75,21 @@ RSpec.describe MockleyCrew::Configuration do
     end
   end
 
-  describe "configure heroku" do
-    before(:each) do
-      MockleyCrew.sqlite3_loaded = false
-    end
+  # describe "configure heroku" do
+  #   before(:each) do
+  #     MockleyCrew.sqlite3_loaded = false
+  #   end
     
-    it "should install sqlite3" do
-      expect {
-        MockleyCrew.configure do |config|
-          config.heroku = true
-        end
-      }.to change {
-        MockleyCrew.sqlite3_loaded
-      }.to(true)
-    end
-  end
+  #   it "should install sqlite3" do
+  #     expect {
+  #       MockleyCrew.configure do |config|
+  #         config.heroku = true
+  #       end
+  #     }.to change {
+  #       MockleyCrew.sqlite3_loaded
+  #     }.to(true)
+  #   end
+  # end
 
   describe "activated" do
     it "should be false as default" do
