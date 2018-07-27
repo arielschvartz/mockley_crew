@@ -38,7 +38,7 @@ module MockleyCrew
   end
 
   def self.set_sqlite3
-    return if self.sqlite3_loaded == true
+    return if defined?(SQLite3)
 
     if `gem which sqlite3` == ""
       system("gem install -v 1.3.13 --install-dir #{Rails.root}/vendor/gems/sqlite3/ sqlite3 -- --with-sqlite3-dir=#{Rails.root}/vendor/sqlite3")
