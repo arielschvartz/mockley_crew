@@ -13,7 +13,6 @@ require "mockley_crew/errors/invalid_amount"
 require "mockley_crew/database"
 require "mockley_crew/factory_builder"
 require "mockley_crew/data"
-require "mockley_crew/sqlite3"
 
 require "mockley_crew/mockley_crew_handled"
 
@@ -39,7 +38,10 @@ module MockleyCrew
 
   def self.set_sqlite3
     return if defined?(SQLite3)
-    MockleyCrew::Sqlite3.full_process
+
+    $: << "#{Rails.root}/vendor/gems/sqlite3/gems/sqlite3-1.3.13/lib/"
+    require 'sqlite3'
+    require 'active_record/connection_adapters/sqlite3_adapter'
   end
 
   def self.root

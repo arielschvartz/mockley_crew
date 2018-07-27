@@ -1,3 +1,6 @@
+# THIS MONCKEY PATCH IS NECESSARY FROM CORRECTLY CONTROLLING THE THREADS RELATED WITH
+# THE DATABASES CREATION.
+
 module ActiveRecord
   module ConnectionAdapters
     class ConnectionHandler
