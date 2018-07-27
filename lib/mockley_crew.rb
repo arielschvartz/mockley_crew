@@ -40,11 +40,21 @@ module MockleyCrew
   def self.set_sqlite3
     return if self.sqlite3_loaded == true
 
-    system("gem install -v 1.3.13 --install-dir #{Rails.root}/vendor/gems/sqlite3/ sqlite3")
+    system("gem install -v 1.3.13 --install-dir #{Rails.root}/vendor/gems/sqlite3/ sqlite3 -- --with-sqlite3-dir=#{Rails.root}/vendor/sqlite3")
 
     $: << "#{Rails.root}/vendor/gems/sqlite3/gems/sqlite3-1.3.13/lib/"
     require 'sqlite3'
+    active_record_path = (`gem which active_record`).split("/")[0..-2].join("/")
+    file_path = active_record_path + "/active_record/connection_adapters/sqlite3_adapter.rb"
+    file_contents = File.read(file_path)
+    new_contents = file_contents.gsub(/gem \"sqlite3\".*$/, "")
+    File.open(file_path, "w+") do |f|
+      f.write(new_contents)
+    end
     require 'active_record/connection_adapters/sqlite3_adapter'
+    File.open(file_path, "w+") do |f|
+      f.write(file_contents)
+    end
     self.sqlite3_loaded = true
   end
 
