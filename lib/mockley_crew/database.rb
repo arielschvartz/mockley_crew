@@ -34,7 +34,7 @@ module MockleyCrew
 
           self.restore_default_connection
         else
-          raise "Cannot disconnect. You are already disconnected from the database."
+          # raise "Cannot disconnect. You are already disconnected from the database."
         end
       end
 
@@ -50,7 +50,7 @@ module MockleyCrew
             ActiveRecord::Base.connection.commit_transaction
           end
         else
-          raise "Cannot commit transactions. You are disconnected from the database."
+          # raise "Cannot commit transactions. You are disconnected from the database."
         end
       end
 
