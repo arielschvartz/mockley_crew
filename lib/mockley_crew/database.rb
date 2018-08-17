@@ -55,8 +55,10 @@ module MockleyCrew
       end
 
       def terminate_thread filename
-        thread = Thread.list.select { |t| t["thread_name"] == filename }.first
-        thread.kill if thread
+        threads = Thread.list.select { |t| t["thread_name"] == filename }
+        threads.each do |t|
+          t.kill
+        end
       end
 
       def create_default_database
